@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "theolab-api"
+authors = [
+    { name = "Sophie Robert-Hayek", email = "sophie.robert@univ-lorraine.fr" },
+]
+description = "Backend for manipulation of data stored within the QWB database."
+readme = "README.md"
+requires-python = ">=3.9,<4.0"
+dynamic = ["version"]
+dependencies = ["fastapi", "databases[aiomysql]", "databases[asyncpg]", "uvicorn","pydantic-settings", "httpx", "pyjwt", "cryptography==41.0.7", "click", "collatex", "Levenshtein", "loguru", "pyyaml", "python-multipart","broadcaster"]
+
+[project.scripts]
+"scribes-api" = "backend.main:main"
+
+[project.optional-dependencies]
+devtools = []
+dev = [
+    "build",
+    "black",
+    "isort",
+    "flake8",
+    "pytest",
+    "pytest-cov",
+    "pyright",
+    "wheel",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "backend.__about__.__version__" }
+
+[tool.pyright]
+pythonVersion = "3.10"
+include = ["src", "tests"]
+exclude = ["**/venv", "**/node_modules", "**/__pycache__", ".git", "**/build"]
+venv = "venv"
+venvPath = "."
+typeCheckingMode = "basic"
+reportUnnecessaryTypeIgnoreComment = "warning"
